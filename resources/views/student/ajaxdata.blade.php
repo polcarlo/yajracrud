@@ -3,7 +3,7 @@
 <head>
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
-
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
 </head>
 <body>
 	<button type="button" name="add" id="add_data" class="btn btn-success">Add</button>
@@ -54,11 +54,18 @@
         <!-- Bootstrap JavaScript -->
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 
 <script>
 	$(document).ready(function(){
 		//View Database
-		$('#student_table').DataTable({
+	var table =	$('#student_table').DataTable({
 			"processing": true,
 			"serverSide": true,
 			"ajax" : "{{ route('ajaxdata.getdata')}}",
@@ -66,8 +73,14 @@
 				{"data":"first_name"},
 				{"data":"last_name"},
 				{"data": "action", orderable:false, searchable: false}
-			]
+			],
+			dom: 'Bfrtip',
+        	buttons: [
+            	'copy', 'csv', 'excel', 'pdf', 'print'
+        	]
 		});
+
+
 
 		//Insert Database
 		$('#add_data').click(function(){
