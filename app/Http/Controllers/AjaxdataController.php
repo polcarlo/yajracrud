@@ -11,6 +11,12 @@ use Yajra\DataTables\Datatables;
 
 class AjaxdataController extends Controller
 {
+	public function __construct(Student $student, Validator $validator)
+	{
+		$this->student = $student;
+		$this->validator = $validator;
+
+	}
 	function index()
 	{
 		return view('student.ajaxdata');
@@ -18,7 +24,7 @@ class AjaxdataController extends Controller
 
 	function getdata()
 	{
-		$students = Student::select('id','first_name','last_name');
+		$students = $this->student::select('id','first_name','last_name');
 		return Datatables::of($students)
 			->addColumn('action', function($student){
 					return '<a href="#" class="btn btn-xs btn-primary edit" id="'.$student->id.'"><i class="glyphicon glyphicon-edit"></i> Edit</a><a href="#" class="btn btn-xs btn-danger delete" id="'.$student->id.'"><i class="glyphicon glyphicon-remove"></i>Delete</a>';
@@ -28,7 +34,7 @@ class AjaxdataController extends Controller
     
     function postdata(Request $request)
     {
-    	$validation = Validator::make($request->all(),[
+    	$validation = $this->validator::make($request->all(),[
     			'first_name' => 'required',
     			'last_name' => 'required'
     	]);
@@ -55,7 +61,7 @@ class AjaxdataController extends Controller
     		}
     		if($request->get('button_action') == 'update')
     		{
-    			$student = Student::find($request->get('student_id'));
+    			$student = $this->student::find($request->get('student_id'));
     			$student->first_name = $request->get('first_name');
     			$student->last_name = $request->get('last_name');
     			$student->save();
@@ -74,7 +80,7 @@ class AjaxdataController extends Controller
     public function fetchdata(Request $request)
     {
     	$id = $request->input('id');
-    	$student = Student::find($id);
+    	$student = $this->student::find($id);
     	$output = array(
     		'first_name'	=> $student->first_name,
     		'last_name'		=> $student->last_name
@@ -84,7 +90,7 @@ class AjaxdataController extends Controller
 
     public function removedata(Request $request)
     {
-    	$student = Student::find($request->input('id'));
+    	$student = $this->student::find($request->input('id'));
     	if($student->delete())
     	{
     		echo 'Data Deleted';
