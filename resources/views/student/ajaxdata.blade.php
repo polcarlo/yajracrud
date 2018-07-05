@@ -76,7 +76,24 @@
 			],
 			dom: 'Bfrtip',
         	buttons: [
-            	'copy', 'csv', 'excel', 'pdf', 'print'
+        		{
+					extend: 'csv',
+        			title: 'Copy'
+        		},
+        		{
+					extend: 'copyHtml5',
+        			title: 'Copy'
+        		},
+        	 	{
+                	extend: 'excelHtml5',
+                	title: 'Data export'
+            	},
+            	{
+               	 	extend: 'pdfHtml5',
+                	title: 'Data export'
+            	},
+            	'print',
+            //	'copy', 'csv', 'excel', 'pdf', 'print'
         	]
 		});
 
