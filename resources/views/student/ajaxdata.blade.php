@@ -66,15 +66,16 @@
 	$(document).ready(function(){
 		//View Database
 	var table =	$('#student_table').DataTable({
+		 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
 			"processing": true,
 			"serverSide": true,
 			"ajax" : "{{ route('ajaxdata.getdata')}}",
 			"columns":[
 				{"data":"first_name"},
 				{"data":"last_name"},
-				{"data": "action", orderable:false, searchable: false}
+				{"data": "action", orderable:true, searchable: true}
 			],
-			dom: 'Bfrtip',
+			dom: 'lBfrtip',
         	buttons: [
         		{
 					extend: 'csv',
