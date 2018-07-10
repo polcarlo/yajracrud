@@ -24,12 +24,18 @@ class AjaxdataController extends Controller
 
 	function getdata()
 	{
-		$students = $this->student::select('id','first_name','last_name');
-		return Datatables::of($students)
+		$students = $this->student::select(['id','first_name','last_name']);
+		$datatables = app('datatables');
+        return $datatables->eloquent($students)->addColumn('action', function($student){
+                    return '<a href="#" class="btn btn-xs btn-primary edit" id="'.$student->id.'"><i class="glyphicon glyphicon-edit"></i> Edit</a><a href="#" class="btn btn-xs btn-danger delete" id="'.$student->id.'"><i class="glyphicon glyphicon-remove"></i>Delete</a>';
+            })->make(true);
+
+        //with tbody in source code
+        /*return Datatables::of($students)
 			->addColumn('action', function($student){
 					return '<a href="#" class="btn btn-xs btn-primary edit" id="'.$student->id.'"><i class="glyphicon glyphicon-edit"></i> Edit</a><a href="#" class="btn btn-xs btn-danger delete" id="'.$student->id.'"><i class="glyphicon glyphicon-remove"></i>Delete</a>';
 			})
-			->make(true);
+			->make(true);*/
 	}
     
     function postdata(Request $request)
