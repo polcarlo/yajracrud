@@ -7,6 +7,7 @@
 </head>
 <body>
 	<button type="button" name="add" id="add_data" class="btn btn-success">Add</button>
+	<button type="button" name="add" id="refresh" class="btn btn-info">Rrefresh</button>
 	<table id="student_table" class="table table-bordered" style="width: 100%">
 		<thead>
 			<tr>
@@ -61,7 +62,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
-
+    <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.js"></script>
 <script>
 	$(document).ready(function(){
 		//View Database
@@ -97,8 +99,10 @@
             //	'copy', 'csv', 'excel', 'pdf', 'print'
         	]
 		});
-
-
+	//Refresh datatables
+	$( "#refresh" ).click(function() {
+  table.ajax.reload();
+});
 
 		//Insert Database
 		$('#add_data').click(function(){
